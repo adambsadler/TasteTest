@@ -44,7 +44,15 @@ class RestaurantViewModel {
     func updateRestaurantRating(restaurant: Restaurant, review: Review) {
         restaurant.reviews.append(review)
         restaurant.averageRating = Double(restaurant.reviews.reduce(0) { $0 + $1.stars }) / Double(restaurant.reviews.count)
-        restaurant.lastReview = review.date
+        
+        guard let date = restaurant.lastReview else {
+            restaurant.lastReview = review.date
+            return
+        }
+        
+        if date < review.date {
+            restaurant.lastReview = review.date
+        }
     }
     
     func formattedDate(_ date: Date) -> String {
