@@ -13,6 +13,7 @@ struct CreateReviewView: View {
     @Binding var isCreatingReview: Bool
     @State var rating: Int = 0
     @State var reviewText: String = ""
+    @State var reviewDate: Date = Date()
     
     var body: some View {
         VStack {
@@ -20,6 +21,9 @@ struct CreateReviewView: View {
                 .font(.title)
                 .fontDesign(.rounded)
                 .padding(.top)
+            
+            DatePicker("Select Review Date:", selection: $reviewDate, displayedComponents: .date)
+                .padding(.horizontal, 30)
             
             HStack {
                 ForEach(1..<6) { index in
@@ -49,7 +53,7 @@ struct CreateReviewView: View {
                 .padding(.horizontal)
             
             Button {
-                restaurantViewModel.addReview(restaurant: restaurant, rating: rating, reviewText: reviewText)
+                restaurantViewModel.addReview(restaurant: restaurant, rating: rating, reviewText: reviewText, reviewDate: reviewDate)
                 isCreatingReview.toggle()
             } label: {
                 Text("Add review")

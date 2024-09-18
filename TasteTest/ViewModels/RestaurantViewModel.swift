@@ -34,8 +34,8 @@ class RestaurantViewModel {
     }
     
     @MainActor
-    func addReview(restaurant: Restaurant, rating: Int, reviewText: String) {
-        let newReview = Review(stars: rating, date: .now, notes: reviewText, restaurant: restaurant)
+    func addReview(restaurant: Restaurant, rating: Int, reviewText: String, reviewDate: Date) {
+        let newReview = Review(stars: rating, date: reviewDate, notes: reviewText, restaurant: restaurant)
         modelContainer.mainContext.insert(newReview)
         updateRestaurantRating(restaurant: restaurant, review: newReview)
     }
