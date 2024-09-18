@@ -27,4 +27,10 @@ class RestaurantViewModel {
     func deleteRestaurant(restaurant: Restaurant) {
         modelContainer.mainContext.delete(restaurant)
     }
+    
+    @MainActor
+    func updateRestaurant(restaurant: Restaurant, name: String, cuisineType: String) {
+        restaurant.name = name
+        restaurant.cuisineType = cuisineType
+    }
 }

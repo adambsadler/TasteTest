@@ -9,10 +9,32 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    enum SortType {
+        case name, averageRating, mostRecentReview
+    }
+    
     var restaurantViewModel: RestaurantViewModel
     @Query private var restaurants: [Restaurant]
     @State var isCreatingRestauruant: Bool = false
+    @State var isEditingRestaurant: Bool = false
+    @State var restaurantToEdit: Restaurant?
+    @State var sortType: SortType = .averageRating
 
+    var sortedRestaurants: [Restaurant] {
+        switch sortType {
+        case .name:
+            return restaurants.sorted(by: {$0.name < $1.name})
+        case .averageRating:
+            return restaurants.sorted(by: {$0.averageRating > $1.averageRating})
+        case .mostRecentReview:
+            return restaurants.sorted(by: { (lhs, rhs) in
+                guard let lhsDate = lhs.lastReview else { return false }
+                guard let rhsDate = rhs.lastReview else { return true }
+                return lhsDate > rhsDate
+            })
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -30,6 +52,7 @@ struct ContentView: View {
                             isCreatingRestauruant.toggle()
                         } label: {
                             Image(systemName: "plus.circle.fill")
+                                .foregroundStyle(Color.cyan)
                         }
                         .padding(.trailing)
                         .font(.title)
@@ -37,11 +60,57 @@ struct ContentView: View {
                 )
                 .padding(.vertical)
                 
+                ZStack {
+                    Rectangle()
+                        .frame(height: 2)
+                        .foregroundStyle(Color.gray)
+                    
+                    Text("Sort By:")
+                        .font(.footnote)
+                        .foregroundStyle(Color.white)
+                        .padding(.vertical, 4)
+                        .padding(.horizontal)
+                        .background(RoundedRectangle(cornerRadius: 8).foregroundStyle(Color.gray))
+                }
+                
+                HStack(spacing: 10) {
+                    Button {
+                        sortType = .averageRating
+                    } label: {
+                        Text("Avg Rating")
+                            .foregroundStyle(sortType == .averageRating ? Color.white : Color.black)
+                    }
+                    .padding(8)
+                    .background(RoundedRectangle(cornerRadius: 8).foregroundStyle(sortType == .averageRating ? Color.cyan : Color.clear))
+                    
+                    Button {
+                        sortType = .name
+                    } label: {
+                        Text("Name")
+                            .foregroundStyle(sortType == .name ? Color.white : Color.black)
+                    }
+                    .padding(8)
+                    .background(RoundedRectangle(cornerRadius: 8).foregroundStyle(sortType == .name ? Color.cyan : Color.clear))
+                    
+                    Button {
+                        sortType = .mostRecentReview
+                    } label: {
+                        Text("Most Recent Review")
+                            .foregroundStyle(sortType == .mostRecentReview ? Color.white : Color.black)
+                    }
+                    .padding(8)
+                    .background(RoundedRectangle(cornerRadius: 8).foregroundStyle(sortType == .mostRecentReview ? Color.cyan : Color.clear))
+                    
+                }
+                .padding(.vertical, 5)
+                .padding(.bottom)
+                
                 Rectangle()
                     .frame(height: 2)
+                    .foregroundStyle(Color.gray)
                 
                 List {
-                    ForEach(restaurants) { restuarant in
+                    ForEach(sortedRestaurants) { restuarant in
                         NavigationLink {
                             Text(restuarant.name)
                         } label: {
@@ -58,7 +127,8 @@ struct ContentView: View {
                                 }
                                 .swipeActions(edge: .trailing) {
                                     Button {
-                                        // edit
+                                        restaurantToEdit = restuarant
+                                        isEditingRestaurant.toggle()
                                     } label: {
                                         Label("Edit", systemImage: "pencil")
                                     }
@@ -72,6 +142,11 @@ struct ContentView: View {
             }
             .sheet(isPresented: $isCreatingRestauruant) {
                 CreateRestaurantView(restaurantViewModel: restaurantViewModel, isCreatingRestaurant: $isCreatingRestauruant)
+            }
+            .sheet(isPresented: $isEditingRestaurant) {
+                if let restaurant = restaurantToEdit {
+                    EditRestaurantView(restaurantViewModel: restaurantViewModel, restaurant: restaurant, isEditingRestaurant: $isEditingRestaurant)
+                }
             }
         }
     }

@@ -15,6 +15,7 @@ final class Restaurant {
     var cuisineType: String
     var reviews: [Review] = []
     var averageRating: Double = 0.0
+    var lastReview: Date?
     
     init(name: String, cuisineType: String) {
         self.id = UUID().hashValue
