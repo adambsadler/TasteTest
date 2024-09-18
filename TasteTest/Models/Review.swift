@@ -13,10 +13,12 @@ final class Review {
     var stars: Int
     var date: Date
     var notes: String
+    var restaurant: Restaurant
     
-    init(stars: Int, date: Date, notes: String) {
+    init(stars: Int, date: Date, notes: String, restaurant: Restaurant) {
         self.stars = stars
         self.date = date
         self.notes = notes
+        self.restaurant = restaurant
     }
 }

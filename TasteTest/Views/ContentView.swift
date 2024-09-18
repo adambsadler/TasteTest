@@ -110,15 +110,15 @@ struct ContentView: View {
                     .foregroundStyle(Color.gray)
                 
                 List {
-                    ForEach(sortedRestaurants) { restuarant in
+                    ForEach(sortedRestaurants) { restaurant in
                         NavigationLink {
-                            Text(restuarant.name)
+                            ReviewsView(restaurantViewModel: restaurantViewModel, restaurant: restaurant)
                         } label: {
-                            RestaurantListView(restaurant: restuarant)
+                            RestaurantListView(restaurant: restaurant)
                                 .swipeActions(edge: .trailing) {
                                     Button {
                                         withAnimation {
-                                            restaurantViewModel.deleteRestaurant(restaurant: restuarant)
+                                            restaurantViewModel.deleteRestaurant(restaurant: restaurant)
                                         }
                                     } label: {
                                         Label("Delete", systemImage: "trash")
@@ -127,7 +127,7 @@ struct ContentView: View {
                                 }
                                 .swipeActions(edge: .trailing) {
                                     Button {
-                                        restaurantToEdit = restuarant
+                                        restaurantToEdit = restaurant
                                         isEditingRestaurant.toggle()
                                     } label: {
                                         Label("Edit", systemImage: "pencil")
