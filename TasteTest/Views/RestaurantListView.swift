@@ -31,7 +31,8 @@ struct RestaurantListView: View {
                 Text(restaurant.cuisineType)
                     .font(.headline)
             }
-             Spacer()
+             
+            Spacer()
             
             ZStack {
                 Circle()

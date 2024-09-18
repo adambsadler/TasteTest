@@ -12,7 +12,7 @@ struct EditRestaurantView: View {
     var restaurant: Restaurant
     @State var restaurantName: String = ""
     @State var cuisineType: Cuisine = .italian
-    @Binding var isEditingRestaurant: Bool
+    @Binding var restaurantToEdit: Restaurant?
     
     var body: some View {
         VStack {
@@ -35,7 +35,7 @@ struct EditRestaurantView: View {
             
             Button {
                 restaurantViewModel.updateRestaurant(restaurant: restaurant, name: restaurantName, cuisineType: cuisineType.rawValue)
-                isEditingRestaurant.toggle()
+                restaurantToEdit = nil
             } label: {
                 Text("Update restaurant")
                     .padding()
@@ -56,6 +56,6 @@ struct EditRestaurantView: View {
 #Preview {
     let previewContainer = PreviewContainer([Restaurant.self, Review.self])
     
-    EditRestaurantView(restaurantViewModel: RestaurantViewModel(modelContainer: previewContainer.container), restaurant: Restaurant(name: "Olive Garden", cuisineType: Cuisine.italian.rawValue), isEditingRestaurant: .constant(true))
+    EditRestaurantView(restaurantViewModel: RestaurantViewModel(modelContainer: previewContainer.container), restaurant: Restaurant(name: "Olive Garden", cuisineType: Cuisine.italian.rawValue), restaurantToEdit: .constant(Restaurant(name: "Olive Garden", cuisineType: Cuisine.italian.rawValue)))
         .modelContainer(previewContainer.container)
 }

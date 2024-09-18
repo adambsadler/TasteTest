@@ -109,44 +109,49 @@ struct ContentView: View {
                     .frame(height: 2)
                     .foregroundStyle(Color.gray)
                 
-                List {
-                    ForEach(sortedRestaurants) { restaurant in
-                        NavigationLink {
-                            ReviewsView(restaurantViewModel: restaurantViewModel, restaurant: restaurant)
-                        } label: {
-                            RestaurantListView(restaurant: restaurant)
-                                .swipeActions(edge: .trailing) {
-                                    Button {
-                                        withAnimation {
-                                            restaurantViewModel.deleteRestaurant(restaurant: restaurant)
+                if restaurants.isEmpty {
+                    Spacer()
+                    Text("No restaurants yet")
+                        .foregroundStyle(Color.gray)
+                    Spacer()
+                } else {
+                    List {
+                        ForEach(sortedRestaurants) { restaurant in
+                            NavigationLink {
+                                ReviewsView(restaurantViewModel: restaurantViewModel, restaurant: restaurant)
+                            } label: {
+                                RestaurantListView(restaurant: restaurant)
+                                    .swipeActions(edge: .trailing) {
+                                        Button {
+                                            withAnimation {
+                                                restaurantViewModel.deleteRestaurant(restaurant: restaurant)
+                                            }
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
                                         }
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
+                                        .tint(.red)
                                     }
-                                    .tint(.red)
-                                }
-                                .swipeActions(edge: .trailing) {
-                                    Button {
-                                        restaurantToEdit = restaurant
-                                        isEditingRestaurant.toggle()
-                                    } label: {
-                                        Label("Edit", systemImage: "pencil")
+                                    .swipeActions(edge: .trailing) {
+                                        Button {
+                                            restaurantToEdit = restaurant
+                                            isEditingRestaurant.toggle()
+                                        } label: {
+                                            Label("Edit", systemImage: "pencil")
+                                        }
+                                        .tint(.gray)
                                     }
-                                    .tint(.gray)
-                                }
+                            }
+                            .listRowSeparator(.hidden)
                         }
-                        .listRowSeparator(.hidden)
                     }
+                    .listStyle(.plain)
                 }
-                .listStyle(.plain)
             }
             .sheet(isPresented: $isCreatingRestauruant) {
                 CreateRestaurantView(restaurantViewModel: restaurantViewModel, isCreatingRestaurant: $isCreatingRestauruant)
             }
-            .sheet(isPresented: $isEditingRestaurant) {
-                if let restaurant = restaurantToEdit {
-                    EditRestaurantView(restaurantViewModel: restaurantViewModel, restaurant: restaurant, isEditingRestaurant: $isEditingRestaurant)
-                }
+            .sheet(item: $restaurantToEdit) { restaurant in
+                EditRestaurantView(restaurantViewModel: restaurantViewModel, restaurant: restaurant, restaurantToEdit: $restaurantToEdit)
             }
         }
     }

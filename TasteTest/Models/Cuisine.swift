@@ -6,7 +6,6 @@
 //
 
 enum Cuisine: String, CaseIterable {
-    
     case bbq = "BBQ"
     case seafood = "Seafood"
     case indian = "Indian"
