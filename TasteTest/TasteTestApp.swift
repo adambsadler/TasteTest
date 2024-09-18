@@ -12,7 +12,8 @@ import SwiftData
 struct TasteTestApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            Restaurant.self,
+            Review.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -24,8 +25,10 @@ struct TasteTestApp: App {
     }()
 
     var body: some Scene {
+        let restaurantViewModel = RestaurantViewModel(modelContainer: sharedModelContainer)
+        
         WindowGroup {
-            ContentView()
+            ContentView(restaurantViewModel: restaurantViewModel)
         }
         .modelContainer(sharedModelContainer)
     }
