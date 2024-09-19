@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
@@ -30,21 +30,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		F91EC2C62C9A0F96009B03EF /* TasteTest */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TasteTest;
-			sourceTree = "<group>";
-		};
-		F91EC2D92C9A0F98009B03EF /* TasteTestTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TasteTestTests;
-			sourceTree = "<group>";
-		};
-		F91EC2E32C9A0F98009B03EF /* TasteTestUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TasteTestUITests;
-			sourceTree = "<group>";
-		};
+		F91EC2C62C9A0F96009B03EF /* TasteTest */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TasteTest; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +62,6 @@
 			isa = PBXGroup;
 			children = (
 				F91EC2C62C9A0F96009B03EF /* TasteTest */,
-				F91EC2D92C9A0F98009B03EF /* TasteTestTests */,
-				F91EC2E32C9A0F98009B03EF /* TasteTestUITests */,
 				F91EC2C52C9A0F96009B03EF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,9 +114,6 @@
 			dependencies = (
 				F91EC2D82C9A0F98009B03EF /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				F91EC2D92C9A0F98009B03EF /* TasteTestTests */,
-			);
 			name = TasteTestTests;
 			packageProductDependencies = (
 			);
@@ -152,9 +133,6 @@
 			);
 			dependencies = (
 				F91EC2E22C9A0F98009B03EF /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				F91EC2E32C9A0F98009B03EF /* TasteTestUITests */,
 			);
 			name = TasteTestUITests;
 			packageProductDependencies = (
@@ -187,6 +165,7 @@
 				};
 			};
 			buildConfigurationList = F91EC2BF2C9A0F96009B03EF /* Build configuration list for PBXProject "TasteTest" */;
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -195,7 +174,6 @@
 			);
 			mainGroup = F91EC2BB2C9A0F96009B03EF;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			productRefGroup = F91EC2C52C9A0F96009B03EF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

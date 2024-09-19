@@ -89,7 +89,7 @@ struct ReviewsView: View {
             } else {
                 List(filteredReviews) { review in
                     VStack(alignment: .leading) {
-                        Text("\(restaurantViewModel.formattedDate(review.date))")
+                        Text("\(DateHelper.formattedDate(review.date))")
                             .font(.headline)
                         
                         HStack {

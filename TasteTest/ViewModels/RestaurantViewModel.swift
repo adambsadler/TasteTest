@@ -24,6 +24,9 @@ class RestaurantViewModel {
     
     @MainActor
     func deleteRestaurant(restaurant: Restaurant) {
+        for review in restaurant.reviews {
+            modelContainer.mainContext.delete(review)
+        }
         modelContainer.mainContext.delete(restaurant)
     }
     
@@ -53,11 +56,5 @@ class RestaurantViewModel {
         if date < review.date {
             restaurant.lastReview = review.date
         }
-    }
-    
-    func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        return formatter.string(from: date)
     }
 }
